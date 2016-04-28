@@ -1,17 +1,20 @@
 module(...,package.seeall);
+--[[
 local physics = require("physics");
 physics.start();
 physics.setDrawMode("hybrid");
+]]--
 
 --creating ship
 function createShip()
-	ship = newShip();
+	local ship = newShip();
 	local shipX, shipY = ship.body:localToContent( 0, 0 );
-	print(shipX, shipY);
+	--print(shipX, shipY);
 	shipOrientation(ship.body, shipX, shipY);
 	return ship;
 end
 
+--[[
 --creating ships with physics
 function createFlyingShips()
 	timer.performWithDelay(2000, function()
@@ -24,6 +27,7 @@ function createFlyingShips()
 		return ship{};
 		end, -1);
 end
+]]--
 
 --creating random ship with health
 function newShip()
@@ -38,13 +42,19 @@ function newShip()
 		return ship;
 	end
 	if (shipNumber==2) then
-		return display.newImage("shipsImages/spaceship-2.png", shipX, shipY);
+		ship.body = display.newImage("shipsImages/spaceship-2.png", shipX, shipY);
+		ship.health = 20;
+		return ship;
 	end
 	if (shipNumber==3) then
-		return display.newImage("shipsImages/spaceship-3.png", shipX, shipY);
+		ship.body = display.newImage("shipsImages/spaceship-3.png", shipX, shipY);
+		ship.health = 30;
+		return ship;
 	end
 	if (shipNumber==4) then
-		return display.newImage("shipsImages/spaceship-4.png", shipX, shipY);
+		ship.body = display.newImage("shipsImages/spaceship-4.png", shipX, shipY);
+		ship.health = 40;
+		return ship;
 	end
 end
 
@@ -82,7 +92,4 @@ function shipOrientation(ship, shipX, shipY)
 		transition.to( ship, { rotation=55, time=0, transition=easing.inOutCubic } );
 	end
 end
-
---function shipMove()
-
 
